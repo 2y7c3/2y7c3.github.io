@@ -166,7 +166,7 @@
                     <p class="bottom-one"></p>
 
                 </article>
-            <!--
+            
                 <article class="post-preview">
                     <h2 class="post-title">Overview</h2>
 
@@ -174,19 +174,32 @@
                     <div class="post-entry">
                         <p><a name="overview"> </a></p>
 
+                    <!--
                         <p align="center">
                             <iframe width="660" height="395" src="https://www.youtube.com/embed/QecJD5HUF7U"
                                     frameborder="0" allow="autoplay; encrypted-media" allowfullscreen
                                     align="center"></iframe>
                         </p>
-
+                    -->
+                    <p align="justify">We proposed Adversarial Score Distillation (ASD) based on the WGAN paradigm. 
+                        The generator could be a NeRF or 3DGS in the text-to-3d task, or a general generator, 
+                        or just image pixels in the 2D distillation and image editing tasks. ASD maintains an optimizable
+                        discriminator by implementing parameters with an optimizable conditional embedding or LoRA, 
+                        and updates this discriminator using the complete loss.</p>
+                    
+                        <figure>
+                            <center>
+                                <img src="http://2y7c3.github.io/imgs/fig.png" width=550 align="middle"/>
+                            </center>
+                        </figure>
+                        
                         <p><a name="abstract"> </a></p>
                     </div>
 
                     <p class="bottom-one"></p>
 
                 </article>
-            -->
+            
                 <article class="post-preview">
                     <h2 class="post-title">Abstract</h2>
 
@@ -204,7 +217,7 @@
                             image editing task, which achieves competitive results.
                         </p>
 
-                        <p><a name="method"> </a></p>
+                        <p><a name="2d"> </a></p>
                     </div>
                     <p class="bottom-one"></p>
                 </article>
@@ -252,11 +265,8 @@
                     <h2 class="post-title">Generated 2D images</h2>
 
                     <div class="post-entry">
-                        <p align="justify">To demonstrate the use of DDFs as basic building blocks, we experiment with
-                            the widely used ResNet architectures for image classification.
-                            We switch the 3 by 3 convolution layer in the basic and bottleneck block of ResNet with DDF
-                            layers
-                            and keep the original hyperparameters, especially using the same number of channels.</p>
+                        <p align="justify">Similarly to ancestral sampling, ASD generates realistic images without over-saturated colors and noisy artifacts. 
+                        </p>
                         
                             <figure>
                                 <center>
@@ -283,7 +293,7 @@
                                 </center>
                             </figure>
 
-                        <p><a name="2d"> </a></p>
+                        <p><a name="nerf"> </a></p>
 
                     </div>
 
@@ -296,8 +306,8 @@
 
                     <div class="post-entry">
 
-                        <p align="justify">We visualize 16 times joint depth upsampling results, where we can see that
-                            DDF-Up-Net recovers more details compared to PAC-Net and other techniques.</p>
+                        <p align="justify">Thanks to the complete discriminator optimization, the proposed ASD can obtain clean
+                            and photorealistic 3D NeRFs.</p>
                         
                             <figure>
                                 <center>
@@ -334,7 +344,7 @@
                                 </center>
                             </figure>
 
-                        <p><a name="nerf"> </a></p>
+                        <p><a name="gs"> </a></p>
                     </div>
                     <p class="bottom-one"></p>
                 </article>
@@ -344,8 +354,21 @@
 
                     <div class="post-entry">
 
-                        <p align="justify">We visualize 16 times joint depth upsampling results, where we can see that
-                            DDF-Up-Net recovers more details compared to PAC-Net and other techniques.</p>
+                        <p align="justify">Thanks to better generative stability, 
+                            ASD can generate high-quality 3D models on 3DGS, which has weaker 3D consistency constraints.
+                            <abbr title="2D Gaussians for Geometrically Accurate Radiance Fields">
+                                Several challenges are present, 
+                            </abbr>
+                            <abbr title="Flexible techniques for differentiable rendering with 3d gaussians">
+                                such as the deficiency of multi-view consistency within the rasterization procedure of 3DGS, 
+                                which results in divergent 2D intersection planes when viewed from different perspectives.
+                            </abbr>
+                            <abbr title="Perspective accurate splatting">
+                                Moreover, employing an affine matrix to project a 3D Gaussian into ray space is only effective for 
+                                producing precise projections in the vicinity of the center and leads to a loss of perspective accuracy 
+                                in the peripheral areas.
+                            </abbr>
+                        </p>
                             <figure>
                                 <center>
                                     <video controls autoplay loop src="http://2y7c3.github.io/imgs/gs5.mp4" width=350 align="middle"></video>
@@ -374,7 +397,7 @@
                                 </center>
                             </figure>
 
-                        <p><a name="gs"> </a></p>
+                        <p><a name="citation"> </a></p>
                     </div>
                     <p class="bottom-one"></p>
                 </article>
@@ -387,12 +410,12 @@
                         <p>Please consider citing the following papers if you make use of this work and/or the
                             corresponding code:</p>
 
-                        <pre><code>@inproceedings{zhou_ddf_cvpr_2021,
+                        <pre><code>@inproceedings{asd_cvpr_2024,
                     title = {Decoupled Dynamic Filter Networks},
-                    author = {Zhou, Jingkai and Jampani, Varun and Pi, Zhixiong and Liu, Qiong and Yang, Ming-Hsuan},
+                    author = {Wei, Min and Zhou, Jingkai and Sun, Junyao and Zhang, Xuesong},
                     booktitle = { IEEE/CVF Conf. on Computer Vision and Pattern Recognition (CVPR)},
                     month = jun,
-                    year = {2021}
+                    year = {2024}
                 }
                 </code></pre>
 
