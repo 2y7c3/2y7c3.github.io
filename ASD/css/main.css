@@ -547,3 +547,27 @@ table tr th :last-child,
 table tr td :last-child {
   margin-bottom: 0;
 }
+
+.column2{
+    float: left;
+    text-align: center;
+    width: 50%;
+}
+
+.column3{
+    float: left;
+    text-align: center;
+    width: 33.33%;
+}
+
+.column4{
+    float: left;
+    text-align: center;
+    width: 25%;
+}
+
+.row::after{
+    content: "";
+    display: table;
+    clear: both;
+}
