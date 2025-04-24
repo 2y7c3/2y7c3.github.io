@@ -169,29 +169,33 @@ Quantitative and qualitative results demonstrate our superior performance over e
 
 
 <section class="section">
-  <div class="container is-max-desktop">
+  <!-- <div class="container is-max-desktop"> -->
+  <div class="hero-body">
+    <div class="columns is-centered has-text-centered">
 
-    <!-- Animation. -->
-    <div class="columns is-centered">
-      <div class="column is-full-width">
-        <h2 class="title is-3">Overview</h2>
+      <!-- Animation. -->
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-three-fifths" style=" margin-top: 30px; margin-bottom: 20px;">
+          <h2 class="title is-3">Overview</h2>
+            <br/>
+            <div class="columns is-vcentered interpolation-panel">
+              <img src="./static/images/net_arch_2.png" width="50%"
+                  class="interpolation-image"
+                  alt="Interpolate start reference image."/>
+            </div>
+            <div class="columns is-vcentered interpolation-panel">
+              <img src="./static/images/net_1.png" width="50%"
+                  class="interpolation-image"
+                  alt="Interpolate start reference image."/>
+            </div>
+          <b>Overall pipeline of 3DV-TON.</b>
+          Given a video, we first use our 3D guidance pipeline to select a frame <i>I</i> adaptively, then reconstruct a textured 3D guidance and animate it align with the original video, <i>i.e. V</i>. We employ a guidance feature extractor for the clothing image <i>C</i> and the try-on images <i>C<sub>t</sub></i>, and perform feature fusion using the self-attentions in the denoising UNet.
+          </div>
           <br/>
-          <div class="columns is-vcentered interpolation-panel">
-            <img src="./static/images/net_arch_2.png"
-                 class="interpolation-image"
-                 alt="Interpolate start reference image."/>
-          </div>
-          <div class="columns is-vcentered interpolation-panel">
-            <img src="./static/images/net_1.png"
-                 class="interpolation-image"
-                 alt="Interpolate start reference image."/>
-          </div>
-        <b>Overall pipeline of 3DV-TON.</b>
-        Given a video, we first use our 3D guidance pipeline to select a frame $I$ adaptively, then reconstruct a textured 3D guidance and animate it align with the original video, i.e. $V$. We employ a guidance feature extractor for the clothing image $C$ and the try-on images $C_t$, and perform feature fusion using the self-attentions in the denoising UNet.
         </div>
-        <br/>
       </div>
     </div>
+  </div>
     <!--/ Animation. -->
 </section>
 
@@ -392,7 +396,7 @@ Quantitative and qualitative results demonstrate our superior performance over e
             <source src="static/videos/diff_people/dress/1244264.mp4" type="video/mp4">
           </video>
         </div>
-
+        <div style="height: 20px;"></div>
 
         <h2 class="title is-4">Bottoms:</h2>
         <div class="columns is-vcentered interpolation-panel">
@@ -435,7 +439,7 @@ Quantitative and qualitative results demonstrate our superior performance over e
             <source src="static/videos/diff_people/lower/1244090.mp4" type="video/mp4">
           </video>
         </div>
-
+        <div style="height: 20px;"></div>
 
         <h2 class="title is-4">Tops:</h2>
         <div class="columns is-vcentered interpolation-panel">
@@ -490,8 +494,12 @@ Quantitative and qualitative results demonstrate our superior performance over e
     <div class="columns is-centered">
       <div class="column is-8">
         <div class="content">
-          <p>
+          <!-- <p>
             This website is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p> -->
+          <p>
+            Website template credit to <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>, and is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
             Commons Attribution-ShareAlike 4.0 International License</a>.
           </p>
         </div>
