@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="3DV-TON: Textured 3D-Guided Consistent Video Try-on via Diffusion Models.">
+  <meta name="keywords" content="Image Inpainting">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>3DV-TON: Textured 3D-Guided Consistent Video Try-on via Diffusion Models</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+<!--  <link rel="icon" href="./static/images/favicon.svg">-->
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+
+  </div>
+</nav>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-2 publication-title">3DV-TON: Textured 3D-Guided Consistent Video Try-on via Diffusion Models</h1>
+          <div class="is-size-4 publication-authors">
+            <!-- <span class="author-block">
+              Anonymous
+            </span> -->
+            <span class="author-block">
+              <a href="https://scholar.google.com/citations?user=XMSWYxMAAAAJ">Min Wei</a><sup>1,2</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://scholar.google.com/citations?user=b1Q-k20AAAAJ">Chaohui Yu</a><sup>1,2</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://scholar.google.com/citations?user=80d4v4kAAAAJ">Jingkai Zhou</a><sup>1,2,3</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://scholar.google.com/citations?user=WCRGTHsAAAAJ">Fan Wang</a><sup>1</sup>
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+              <span class="author-block"><sup>1</sup>Alibaba DAMO Academy, <sup>2</sup>Hupan Lab, <sup>3</sup>Zhejiang University</span>
+          </div>
+          
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="https://2y7c3.github.io/pdfs/3dvton.pdf"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href="https://"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code and Benchmark (coming soon)</span>
+                  </a>
+              </span>
+              <!-- Dataset Link.
+              <span class="link-block">
+                <a href="https://github.com/google/nerfies/releases/tag/0.1"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="far fa-images"></i>
+                  </span>
+                  <span>Data</span>
+                  </a> -->
+            </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <center>
+      <img src="./static/images/teaser.png" width="2000px"/>
+      <p>Try-on videos generated by 3DV-TON. Our method can handle various types of clothing and body poses, while accurately restoring clothing details and maintaining consistent texture motion.</p>
+      </center>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+          Video try-on replaces clothing in videos with target garments. Existing methods struggle to generate high-quality and temporally consistent results when handling complex clothing patterns and diverse body poses. 
+We present <b>3DV-TON</b>, a novel diffusion-based framework for generating high-fidelity and temporally consistent video try-on results. 
+Our approach employs generated animatable textured 3D meshes as explicit frame-level guidance, alleviating the issue of models over-focusing on appearance fidelity at the expanse of motion coherence. This is achieved by enabling direct reference to consistent garment texture movements throughout video sequences.
+The proposed method features an adaptive pipeline for generating dynamic 3D guidance: (1) selecting a keyframe for initial 2D image try-on, followed by (2) reconstructing and animating a textured 3D mesh synchronized with original video poses. We further introduce a robust rectangular masking strategy that successfully mitigates artifact propagation caused by leaking clothing information during dynamic human and garment movements.
+To advance video try-on research, we introduce HR-VVT, a high-resolution benchmark dataset containing 130 videos with diverse clothing types and scenarios. 
+Quantitative and qualitative results demonstrate our superior performance over existing methods.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+
+    <!-- Animation. -->
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Overview</h2>
+          <br/>
+          <div class="columns is-vcentered interpolation-panel">
+            <img src="./static/images/net_arch_2.png"
+                 class="interpolation-image"
+                 alt="Interpolate start reference image."/>
+          </div>
+          <div class="columns is-vcentered interpolation-panel">
+            <img src="./static/images/net_1.png"
+                 class="interpolation-image"
+                 alt="Interpolate start reference image."/>
+          </div>
+        <b>Overall pipeline of 3DV-TON.</b>
+        Given a video, we first use our 3D guidance pipeline to select a frame $I$ adaptively, then reconstruct a textured 3D guidance and animate it align with the original video, i.e. $V$. We employ a guidance feature extractor for the clothing image $C$ and the try-on images $C_t$, and perform feature fusion using the self-attentions in the denoising UNet.
+        </div>
+        <br/>
+      </div>
+    </div>
+    <!--/ Animation. -->
+</section>
+
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Animation. -->
+        <!-- Paper video. -->
+    <div class="columns is-centered">
+      <div class="column">
+          <h2 class="title is-3">Video Try-on Results Comparison</h2>
+          <h3 class="title is-5">&nbsp;&nbsp;&nbsp;&nbsp; Input video &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Clothes &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ViViD &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  CatV^2TON &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ours</h3>
+          <div class="columns is-vcentered interpolation-panel">
+              <video autoplay loop muted controls width="1000">
+                <source src="static/videos/compare/1221161_detail.mp4" type="video/mp4">
+              </video>
+          </div>
+          <div class="columns is-vcentered interpolation-panel">
+            <video autoplay loop muted controls width="1000">
+              <source src="static/videos/compare/1222031_detail.mp4" type="video/mp4">
+            </video>
+        </div>
+          <div class="columns is-vcentered interpolation-panel">
+              <video autoplay loop muted controls width="1000">
+                <source src="static/videos/compare/1222210_detail.mp4" type="video/mp4">
+              </video>
+          </div>
+          <div class="columns is-vcentered interpolation-panel">
+              <video autoplay loop muted controls width="1000">
+                <source src="static/videos/compare/1224181_detail.mp4" type="video/mp4">
+              </video>
+          </div>
+          <div class="columns is-vcentered interpolation-panel">
+              <video autoplay loop muted controls width="1000">
+                <source src="static/videos/compare/1227970_detail.mp4" type="video/mp4">
+              </video>
+          </div>
+          <div class="columns is-vcentered interpolation-panel">
+              <video autoplay loop muted controls width="1000">
+                <source src="static/videos/compare/1229335_detail.mp4" type="video/mp4">
+              </video>
+          </div>
+          <div class="columns is-vcentered interpolation-panel">
+              <video autoplay loop muted controls width="1000">
+                <source src="static/videos/compare/1229830_detail.mp4" type="video/mp4">
+              </video>
+          </div>
+          <div class="columns is-vcentered interpolation-panel">
+              <video autoplay loop muted controls width="1000">
+                <source src="static/videos/compare/1232592_detail.mp4" type="video/mp4">
+              </video>
+          </div>
+          <div class="columns is-vcentered interpolation-panel">
+              <video autoplay loop muted controls width="1000">
+                <source src="static/videos/compare/1232941_detail.mp4" type="video/mp4">
+              </video>
+          </div>
+          <div class="columns is-vcentered interpolation-panel">
+              <video autoplay loop muted controls width="1000">
+                <source src="static/videos/compare/236120343785_7.mp4.mp4" type="video/mp4">
+              </video>
+          </div>
+          <div class="columns is-vcentered interpolation-panel">
+              <video autoplay loop muted controls width="1000">
+                <source src="static/videos/compare/257224187474_0.mp4.mp4" type="video/mp4">
+              </video>
+          </div>
+          <div class="columns is-vcentered interpolation-panel">
+              <video autoplay loop muted controls width="1000">
+                <source src="static/videos/compare/332173078295_0_1.mp4.mp4" type="video/mp4">
+              </video>
+          </div>
+          <div class="columns is-vcentered interpolation-panel">
+              <video autoplay loop muted controls width="1000">
+                <source src="static/videos/compare/381123854063_0.mp4.mp4" type="video/mp4">
+              </video>
+          </div>
+          <div class="columns is-vcentered interpolation-panel">
+              <video autoplay loop muted controls width="1000">
+                <source src="static/videos/compare/395791193310_2.mp4.mp4" type="video/mp4">
+              </video>
+          </div>
+          <div class="columns is-vcentered interpolation-panel">
+              <video autoplay loop muted controls width="1000">
+                <source src="static/videos/compare/438620969025_0.mp4.mp4" type="video/mp4">
+              </video>
+          </div>
+          <div class="columns is-vcentered interpolation-panel">
+              <video autoplay loop muted controls width="1000">
+                <source src="static/videos/compare/463843282349_0.mp4.mp4" type="video/mp4">
+              </video>
+          </div>
+
+      </div>
+  </div>
+  </div>
+  <!--/ Animation. -->
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">More video try-on results of our method</h2>
+        <h2 class="title is-4">Same person+Different clothes</h2>
+        <div class="columns is-vcentered interpolation-panel">
+          <video autoplay loop muted controls width="500">
+            <source src="static/videos/same_people/682050365689.mp4" type="video/mp4">
+          </video>
+          <video autoplay loop muted controls width="500">
+            <source src="static/videos/same_people/703501149548.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="columns is-vcentered interpolation-panel">
+          <video autoplay loop muted controls width="500">
+            <source src="static/videos/same_people/744103034951.mp4" type="video/mp4">
+          </video>
+          <video autoplay loop muted controls width="500">
+            <source src="static/videos/same_people/744288310346.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="columns is-vcentered interpolation-panel">
+          <video autoplay loop muted controls width="500">
+            <source src="static/videos/same_people/744337599164.mp4" type="video/mp4">
+          </video>
+          <video autoplay loop muted controls width="500">
+            <source src="static/videos/same_people/746387085425.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="columns is-vcentered interpolation-panel">
+          <video autoplay loop muted controls width="500">
+            <source src="static/videos/same_people/746555102159.mp4" type="video/mp4">
+          </video>
+          <video autoplay loop muted controls width="500">
+            <source src="static/videos/same_people/755156458065.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="columns is-vcentered interpolation-panel">
+          <video autoplay loop muted controls width="500">
+            <source src="static/videos/same_people/755579375815.mp4" type="video/mp4">
+          </video>
+          <video autoplay loop muted controls width="500">
+            <source src="static/videos/same_people/758292874781.mp4" type="video/mp4">
+          </video>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Different person--Different clothes</h2>
+        <h2 class="title is-4">Dress:</h2>
+        <div class="columns is-vcentered interpolation-panel">
+          <video autoplay loop muted controls width="500">
+            <source src="static/videos/diff_people/dress/1222210.mp4" type="video/mp4">
+          </video>
+          <video autoplay loop muted controls width="500">
+            <source src="static/videos/diff_people/dress/1224384.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="columns is-vcentered interpolation-panel">
+          <video autoplay loop muted controls width="500">
+            <source src="static/videos/diff_people/dress/1225122.mp4" type="video/mp4">
+          </video>
+          <video autoplay loop muted controls width="500">
+            <source src="static/videos/diff_people/dress/1231331.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="columns is-vcentered interpolation-panel">
+          <video autoplay loop muted controls width="500">
+            <source src="static/videos/diff_people/dress/1232448.mp4" type="video/mp4">
+          </video>
+          <video autoplay loop muted controls width="500">
+            <source src="static/videos/diff_people/dress/1232459.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="columns is-vcentered interpolation-panel">
+          <video autoplay loop muted controls width="500">
+            <source src="static/videos/diff_people/dress/1233680.mp4" type="video/mp4">
+          </video>
+          <video autoplay loop muted controls width="500">
+            <source src="static/videos/diff_people/dress/1237261.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="columns is-vcentered interpolation-panel">
+          <video autoplay loop muted controls width="500">
+            <source src="static/videos/diff_people/dress/1238207.mp4" type="video/mp4">
+          </video>
+          <video autoplay loop muted controls width="500">
+            <source src="static/videos/diff_people/dress/1244264.mp4" type="video/mp4">
+          </video>
+        </div>
+
+
+        <h2 class="title is-4">Bottoms:</h2>
+        <div class="columns is-vcentered interpolation-panel">
+          <video autoplay loop muted controls width="500">
+            <source src="static/videos/diff_people/lower/1221163.mp4" type="video/mp4">
+          </video>
+          <video autoplay loop muted controls width="500">
+            <source src="static/videos/diff_people/lower/1222019.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="columns is-vcentered interpolation-panel">
+          <video autoplay loop muted controls width="500">
+            <source src="static/videos/diff_people/lower/1224177.mp4" type="video/mp4">
+          </video>
+          <video autoplay loop muted controls width="500">
+            <source src="static/videos/diff_people/lower/1227978.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="columns is-vcentered interpolation-panel">
+          <video autoplay loop muted controls width="500">
+            <source src="static/videos/diff_people/lower/1229568.mp4" type="video/mp4">
+          </video>
+          <video autoplay loop muted controls width="500">
+            <source src="static/videos/diff_people/lower/1233867.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="columns is-vcentered interpolation-panel">
+          <video autoplay loop muted controls width="500">
+            <source src="static/videos/diff_people/lower/1234069.mp4" type="video/mp4">
+          </video>
+          <video autoplay loop muted controls width="500">
+            <source src="static/videos/diff_people/lower/1234073.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="columns is-vcentered interpolation-panel">
+          <video autoplay loop muted controls width="500">
+            <source src="static/videos/diff_people/lower/1242488.mp4" type="video/mp4">
+          </video>
+          <video autoplay loop muted controls width="500">
+            <source src="static/videos/diff_people/lower/1244090.mp4" type="video/mp4">
+          </video>
+        </div>
+
+
+        <h2 class="title is-4">Tops:</h2>
+        <div class="columns is-vcentered interpolation-panel">
+          <video autoplay loop muted controls width="500">
+            <source src="static/videos/diff_people/upper/1219160.mp4" type="video/mp4">
+          </video>
+          <video autoplay loop muted controls width="500">
+            <source src="static/videos/diff_people/upper/1219234.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="columns is-vcentered interpolation-panel">
+          <video autoplay loop muted controls width="500">
+            <source src="static/videos/diff_people/upper/1221521.mp4" type="video/mp4">
+          </video>
+          <video autoplay loop muted controls width="500">
+            <source src="static/videos/diff_people/upper/1227822.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="columns is-vcentered interpolation-panel">
+          <video autoplay loop muted controls width="500">
+            <source src="static/videos/diff_people/upper/1227950.mp4" type="video/mp4">
+          </video>
+          <video autoplay loop muted controls width="500">
+            <source src="static/videos/diff_people/upper/1229910.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="columns is-vcentered interpolation-panel">
+          <video autoplay loop muted controls width="500">
+            <source src="static/videos/diff_people/upper/1230272.mp4" type="video/mp4">
+          </video>
+          <video autoplay loop muted controls width="500">
+            <source src="static/videos/diff_people/upper/1235969.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="columns is-vcentered interpolation-panel">
+          <video autoplay loop muted controls width="500">
+            <source src="static/videos/diff_people/upper/1235973.mp4" type="video/mp4">
+          </video>
+          <video autoplay loop muted controls width="500">
+            <source src="static/videos/diff_people/upper/1238076.mp4" type="video/mp4">
+          </video>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
